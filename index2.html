@@ -1722,17 +1722,38 @@
     </a>
 </div>
 
-    <div class="ca-wrap reveal reveal-delay-4">
-      <span class="ca-label">Contratos Inteligentes (Solana)</span>
-      <button class="ca-btn" id="ca-btn" onclick="copyCA()">
-        <span class="ca-text" id="ca-text">4XwYVj9MmLfTGyt1ny4AKMwSRvHaBqXE28jGmy7nqPGw</span>
-         <span class="ca-text" id="ca-text">8517DWk6Abewx72kPj9M39FcgMqSuQBBN6xmiunxfun</span>
-         <span class="ca-text" id="ca-text">3LvzAHUipgpfWLMBsZmoxk3XhgjWf8e4aekkifaiWLKL</span>
-        <span class="ca-icon" id="ca-icon">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-        </span>
-      </button>
-    </div>
+    <!-- Contrato 1 -->
+<div class="ca-wrap reveal reveal-delay-4" style="margin-bottom: 24px;">
+  <span class="ca-label">Contrato Inteligente #1 (Solana)</span>
+  <button class="ca-btn" onclick="copiarContrato('4XwYVj9MmLfTGyt1ny4AKMwSRvHaBqXE28jGmy7nqPGw', this)">
+    <span class="ca-text">4XwYVj9MmLfTGyt1ny4AKMwSRvHaBqXE28jGmy7nqPGw</span>
+    <span class="ca-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+    </span>
+  </button>
+</div>
+
+<!-- Contrato 2 -->
+<div class="ca-wrap reveal reveal-delay-4" style="margin-bottom: 24px;">
+  <span class="ca-label">Contrato Inteligente #2 (Solana)</span>
+  <button class="ca-btn" onclick="copiarContrato('8517DWk6Abewx72kPj9M39FcgMqSuQBBN6xmiunxfun', this)">
+    <span class="ca-text">8517DWk6Abewx72kPj9M39FcgMqSuQBBN6xmiunxfun</span>
+    <span class="ca-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+    </span>
+  </button>
+</div>
+
+<!-- Contrato 3 -->
+<div class="ca-wrap reveal reveal-delay-4" style="margin-bottom: 24px;">
+  <span class="ca-label">Contrato Inteligente #3 (Solana)</span>
+  <button class="ca-btn" onclick="copiarContrato('3LvzAHUipgpfWLMBsZmoxk3XhgjWf8e4aekkifaiWLKL', this)">
+    <span class="ca-text">3LvzAHUipgpfWLMBsZmoxk3XhgjWf8e4aekkifaiWLKL</span>
+    <span class="ca-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+    </span>
+  </button>
+</div>
   </div>
 </section>
 
@@ -1930,19 +1951,25 @@
   const donutSvg = document.getElementById('donut-svg');
   if (donutSvg) donutObserver.observe(donutSvg.closest('.donut-container'));
 
-  // ── Copy CA ──
-  function copyCA() {
-    const ca = '1PCTxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-    navigator.clipboard.writeText(ca).catch(() => {});
-    const btn = document.getElementById('ca-btn');
-    const icon = document.getElementById('ca-icon');
-    btn.classList.add('copied');
-    icon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+ function copiarContrato(direccion, boton) {
+  navigator.clipboard.writeText(direccion).then(() => {
+    // Feedback visual en el botón cliqueado
+    boton.classList.add('copied');
+    const icono = boton.querySelector('.ca-icon');
+    if (icono) {
+      icono.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+    }
     setTimeout(() => {
-      btn.classList.remove('copied');
-      icon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+      boton.classList.remove('copied');
+      if (icono) {
+        icono.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+      }
     }, 2000);
-  }
+  }).catch(err => {
+    console.error('Error al copiar:', err);
+    alert('No se pudo copiar la dirección');
+  });
+}
 </script>
 
 </body>
