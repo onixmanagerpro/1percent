@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/webp" href="AQUI_TU_CODIGO_BASE64" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>1PERCENT — La Crypto del Mundo Real</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── CSS VARIABLES ─── */
+    :root {
+      --gold: #f59e0b;
+      --gold-light: #fde68a;
+      --gold-dim: #92400e;
+      --bg-base: #050505;
+      --bg-card: #0a0a0a;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-base);
+      color: #e5e7eb;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+    }
+
+    ::selection { background: rgba(146,64,14,0.4); color: var(--gold-light); }
+
+    a { text-decoration: none; color: inherit; }
+
+    section, footer, nav, #stats {
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    /* ─── BACKGROUND ─── */
+    #bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: var(--bg-base);
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.1;
+      background-image: radial-gradient(circle at 2px 2px, var(--gold) 1px, transparent 0);
+      background-size: 40px 40px;
+    }
+
+    #particles-canvas {
+      position: absolute;
+      inset: 0;
+      opacity: 0.4;
+      mix-blend-mode: screen;
+    }
+
+    /* ─── LAYOUT ─── */
+    .relative { position: relative; }
+    .z10 { position: relative; z-index: 10; }
+    .max-w { max-width: 1280px; margin: 0 auto; }
+    .section-pad { padding: 80px 24px; }
+    @media (min-width: 768px) { .section-pad { padding: 128px 48px; } }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 64px;
+      transition: all 0.3s;
+    }
+    @media (min-width: 768px) { nav { padding: 0 48px; height: 80px; } }
+
+    nav.scrolled {
+      background: rgba(5,5,5,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(245,158,11,0.1);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-logo-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: conic-gradient(from 130deg, #f59e0b, #fde68a, #92400e, #fde68a, #f59e0b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 700;
+      color: #000;
+      box-shadow: 0 0 15px rgba(245,158,11,0.5);
+    }
+
+    .nav-links {
+      display: none;
+      list-style: none;
+      gap: 32px;
+    }
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    .nav-btn {
+      display: none;
+      padding: 10px 24px;
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      transition: all 0.3s;
+      font-family: var(--font-body);
+    }
+    @media (min-width: 768px) { .nav-btn { display: block; } }
+    .nav-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(245,158,11,0.4); }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    @media (min-width: 768px) { .hamburger { display: none; } }
+
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--gold);
+      transition: all 0.3s;
+    }
+
+    /* Mobile Menu */
+    #mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      z-index: 40;
+      background: rgba(5,5,5,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid #111;
+      padding: 24px;
+      flex-direction: column;
+      gap: 0;
+    }
+    #mobile-menu.open { display: flex; }
+
+    #mobile-menu a {
+      padding: 16px 0;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      text-align: center;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    #mobile-menu a:hover { color: #fff; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      z-index: 10;
+      padding: 128px 24px 64px;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      min-height: calc(100vh - 80px);
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      #hero { padding: 160px 48px 80px; grid-template-columns: 7fr 5fr; }
+    }
+
+    .hero-badge {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+
+    .badge-live {
+      padding: 2px 8px;
+      background: rgba(146,64,14,0.4);
+      color: var(--gold-light);
+      font-size: 9px;
+      font-family: monospace;
+      border: 1px solid var(--gold-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .badge-line { height: 1px; width: 48px; background: var(--gold-dim); }
+
+    .badge-net {
+      color: #6b7280;
+      font-size: 9px;
+      font-family: monospace;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 100px);
+      line-height: 0.9;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.2s forwards;
+    }
+
+    .hero-title .outline {
+      color: transparent;
+      -webkit-text-stroke: 1px #f59e0b;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: #9ca3af;
+      font-weight: 500;
+      max-width: 420px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s ease-out 0.4s forwards;
+    }
+    @media (min-width: 640px) { .hero-desc { font-size: 1.125rem; } }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease-out 0.6s forwards;
+    }
+    @media (min-width: 640px) { .hero-buttons { flex-direction: row; } }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #000;
+      padding: 18px 40px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-body);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,0.3); }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 18px 40px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid var(--gold-dim);
+      color: #fff;
+      transition: all 0.3s;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    .hero-solana {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #6b7280;
+      opacity: 0;
+      animation: fadeUp 0.8s ease-out 0.8s forwards;
+    }
+
+    .sol-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(168,85,247,0.3);
+      background: rgba(168,85,247,0.1);
+      color: #c084fc;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 9px;
+    }
+
+    .sol-dot { width: 6px; height: 6px; background: #a855f7; }
+
+    .hero-image-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.8s forwards;
+    }
+
+    .hero-img-inner {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 4/5;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(245,158,11,0.2);
+      box-shadow: 0 0 50px rgba(245,158,11,0.15);
+      position: relative;
+    }
+    @media (min-width: 1024px) { .hero-img-inner { max-width: 100%; } }
+
+    .hero-img-inner img { width: 100%; height: 100%; object-fit: cover; }
+
+    .hero-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--bg-base), transparent, transparent);
+      z-index: 1;
+    }
+
+    .hero-status {
+      position: absolute;
+      top: 16px; right: 16px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s infinite;
+    }
+
+    .status-text {
+      font-family: monospace;
+      font-size: 8px;
+      color: #fff;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* ─── STATS ROW ─── */
+    #stats {
+      position: relative;
+      z-index: 10;
+      background: var(--bg-card);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 40px 24px;
+    }
+
+    .stats-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+      }
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0 16px;
+    }
+    @media (min-width: 768px) {
+      .stat-item { border-right: 1px solid rgba(255,255,255,0.1); }
+      .stat-item:last-child { border-right: none; }
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 48px);
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 64px);
+      font-weight: 300;
+      line-height: 1;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+
+    .section-title em { color: var(--gold-light); font-style: italic; }
+
+    .divider {
+      width: 64px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin-bottom: 24px;
+    }
+
+    .section-desc {
+      color: #9ca3af;
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      position: relative;
+      z-index: 10;
+      padding: 80px 24px;
+    }
+    @media (min-width: 768px) { #about { padding: 128px 48px; } }
+
+    .about-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr 1fr; gap: 96px; }
+    }
+
+    /* Coin */
+    .coin-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      order: 2;
+      overflow: hidden;
+    }
+    @media (min-width: 1024px) { .coin-wrap { order: 1; } }
+
+    .coin-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(245,158,11,0.3);
+      animation: ringPulse 4s ease-in-out infinite;
+    }
+
+    .coin-3d {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      border: none;
+      box-shadow: 0 0 40px rgba(245,158,11,0.3);
+      animation: coinSpin 12s cubic-bezier(0.4,0,0.2,1) infinite;
+      overflow: hidden;
+    }
+    @media (min-width: 640px) { .coin-3d { width: 224px; height: 224px; font-size: 4rem; } }
+
+    .about-content { order: 1; }
+    @media (min-width: 1024px) { .about-content { order: 2; } }
+
+    .feature-list { display: flex; flex-direction: column; gap: 32px; }
+
+    .feature-item { display: flex; gap: 20px; }
+
+    .feature-icon {
+      width: 48px; height: 48px;
+      flex-shrink: 0;
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: 12px;
+      background: rgba(245,158,11,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+
+    .feature-icon svg { width: 24px; height: 24px; }
+
+    .feature-title { color: #fff; font-weight: 500; margin-bottom: 4px; }
+    .feature-desc { color: #9ca3af; font-size: 14px; line-height: 1.6; }
+
+    /* ─── COMMUNITY ─── */
+    #community {
+      position: relative;
+      z-index: 10;
+      background: var(--bg-card);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 80px 24px;
+    }
+    @media (min-width: 768px) { #community { padding: 128px 48px; } }
+
+    .community-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .community-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+    }
+
+    .community-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px;
+      border: 1px solid rgba(245,158,11,0.3);
+      background: rgba(245,158,11,0.05);
+      border-radius: 999px;
+      margin-bottom: 32px;
+    }
+
+    .community-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .community-badge span {
+      font-family: monospace;
+      font-size: 9px;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .community-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 56px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .text-gradient-gold {
+      background: linear-gradient(to right, var(--gold), var(--gold-light), #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .community-divider { width: 64px; height: 2px; background: var(--gold); margin: 24px 0; }
+
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .journey-item { display: flex; flex-direction: column; gap: 12px; }
+
+    .journey-icon {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .journey-icon svg { width: 20px; height: 20px; }
+
+    .journey-label {
+      color: #fff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 11px;
+    }
+
+    .journey-desc { color: #9ca3af; font-family: monospace; font-size: 10px; }
+
+    .community-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to right, var(--gold-dim), var(--gold));
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .community-motto {
+      color: #9ca3af;
+      font-weight: 500;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+
+    .community-img {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/5;
+      max-width: 400px;
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid rgba(245,158,11,0.2);
+      box-shadow: 0 0 60px rgba(245,158,11,0.15);
+      background: #000;
+    }
+    @media (min-width: 1024px) { .community-img { max-width: none; } }
+
+    .community-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    .staking-badge {
+      position: absolute;
+      top: 24px; right: 24px;
+      border: 1px solid var(--gold);
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-align: right;
+    }
+
+    .staking-title { color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; font-size: 10px; }
+    .staking-sub { color: var(--gold-light); font-family: monospace; font-size: 8px; margin-top: 2px; }
+
+    /* ─── HOW IT WORKS ─── */
+    #how {
+      position: relative;
+      z-index: 10;
+      background: var(--bg-card);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 80px 24px;
+    }
+    @media (min-width: 768px) { #how { padding: 128px 48px; } }
+
+    .how-header { text-align: center; margin-bottom: 64px; }
+    .how-header .section-desc { margin: 0 auto; }
+    .how-header .divider { margin: 0 auto 0; display: none; }
+
+    .steps-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .glass-card {
+      background: rgba(10,10,10,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      padding: 40px;
+      border-radius: 16px;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(245,158,11,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(245,158,11,0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(245,158,11,0.15);
+    }
+
+    .glass-card:hover::before { opacity: 1; }
+
+    .step-num {
+      position: absolute;
+      top: 16px; right: 24px;
+      font-family: var(--font-display);
+      font-size: 5rem;
+      font-weight: 700;
+      color: rgba(245,158,11,0.05);
+      line-height: 1;
+      transition: color 0.5s;
+    }
+
+    .glass-card:hover .step-num { color: rgba(245,158,11,0.1); }
+
+    .step-icon { color: var(--gold); margin-bottom: 24px; }
+    .step-icon svg { width: 36px; height: 36px; }
+    .step-title { color: #fff; font-weight: 500; font-size: 1.1rem; margin-bottom: 12px; }
+    .step-desc { color: #9ca3af; font-size: 14px; line-height: 1.6; }
+
+    /* ─── MERCHANTS ─── */
+    #comercios { padding: 80px 24px; }
+    @media (min-width: 768px) { #comercios { padding: 128px 48px; } }
+
+    .merchants-header { text-align: center; margin-bottom: 64px; }
+    .merchants-header .section-desc { margin: 0 auto 0; }
+
+    .merchants-grid {
+      max-width: 1280px;
+      margin: 0 auto 48px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) { .merchants-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1280px) { .merchants-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .merchant-card {
+      display: flex;
+      flex-direction: column;
+      padding: 32px;
+      position: relative;
+    }
+
+    .merchant-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .merchant-card:hover::after { opacity: 1; }
+
+    .merchant-icon { color: rgba(255,255,255,0.6); margin-bottom: 20px; transition: color 0.3s; }
+    .merchant-icon svg { width: 32px; height: 32px; }
+    .glass-card:hover .merchant-icon { color: var(--gold-light); }
+
+    .merchant-title { color: #fff; font-weight: 500; font-size: 1.1rem; margin-bottom: 8px; }
+    .merchant-desc { color: #9ca3af; font-size: 14px; line-height: 1.6; flex-grow: 1; margin-bottom: 24px; }
+
+    .merchant-badge {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      padding: 4px 12px;
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.2);
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 999px;
+    }
+
+    .merchants-cta { text-align: center; color: #6b7280; font-size: 14px; }
+    .merchants-cta a { color: var(--gold-light); }
+    .merchants-cta a:hover { text-decoration: underline; }
+
+    /* ─── TOKENOMICS ─── */
+    #tokenomics {
+      position: relative;
+      z-index: 10;
+      background: var(--bg-card);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 80px 24px;
+    }
+    @media (min-width: 768px) { #tokenomics { padding: 128px 48px; } }
+
+    .tokenomics-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .tokenomics-grid { grid-template-columns: 1fr 1fr; gap: 96px; }
+    }
+
+    .token-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .token-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: rgba(5,5,5,0.5);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      transition: border-color 0.3s;
+    }
+
+    .token-row:hover { border-color: rgba(245,158,11,0.3); }
+
+    .token-row-left { display: flex; align-items: center; gap: 12px; }
+
+    .token-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    .token-name { color: #e5e7eb; font-size: 14px; font-weight: 500; }
+
+    .token-pct {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+
+    .donut-wrap {
+      display: flex;
+      justify-content: center;
+      order: -1;
+    }
+    @media (min-width: 1024px) { .donut-wrap { order: 1; } }
+
+    .donut-container {
+      position: relative;
+      width: 300px; height: 300px;
+    }
+    @media (min-width: 640px) { .donut-container { width: 360px; height: 360px; } }
+
+    .donut-container svg {
+      transform: rotate(-90deg);
+      width: 100%; height: 100%;
+      filter: drop-shadow(0 0 30px rgba(201,168,76,0.15));
+    }
+
+    .donut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-value {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--gold-light);
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    .donut-label {
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    /* Donut animation */
+    .donut-seg {
+      stroke-dasharray: 0 628.32;
+      transition: stroke-dasharray 1.5s ease-out;
+    }
+
+    /* ─── SOLANA ─── */
+    #solana {
+      position: relative;
+      z-index: 10;
+      padding: 80px 24px;
+      text-align: center;
+    }
+    @media (min-width: 768px) { #solana { padding: 128px 48px; } }
+
+    .solana-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      border: 1px solid rgba(168,85,247,0.3);
+      background: rgba(168,85,247,0.05);
+      border-radius: 16px;
+      margin-bottom: 80px;
+      box-shadow: 0 0 40px rgba(153,69,255,0.1);
+    }
+    @media (min-width: 640px) {
+      .solana-badge { flex-direction: row; }
+    }
+
+    .solana-badge-text {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: #c084fc;
+      text-transform: uppercase;
+    }
+
+    .solana-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) { .solana-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .solana-card {
+      text-align: left;
+    }
+
+    .solana-card:hover { border-color: rgba(168,85,247,0.3); }
+
+    .solana-icon { color: #c084fc; margin-bottom: 24px; }
+    .solana-icon svg { width: 36px; height: 36px; }
+
+    /* ─── CTA ─── */
+    #cta {
+      position: relative;
+      z-index: 10;
+      padding: 80px 24px;
+      text-align: center;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    @media (min-width: 768px) { #cta { padding: 128px 48px; } }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 72px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .cta-desc {
+      color: #9ca3af;
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 64px;
+    }
+    @media (min-width: 640px) { .cta-buttons { flex-direction: row; gap: 20px; } }
+
+    .cta-btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #000;
+      border: none;
+      padding: 16px 40px;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 4px;
+      box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+      transition: all 0.3s;
+      font-family: var(--font-body);
+    }
+    .cta-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(201,168,76,0.45); }
+
+    .cta-btn-secondary {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 16px 40px;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-family: var(--font-body);
+    }
+    .cta-btn-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    .ca-wrap { display: inline-flex; flex-direction: column; align-items: center; gap: 10px; }
+
+    .ca-label {
+      font-size: 9px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    .ca-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      padding: 10px 24px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.3s;
+      max-width: 420px;
+      overflow: hidden;
+    }
+
+    .ca-btn:hover { border-color: rgba(245,158,11,0.5); color: var(--gold-light); }
+    .ca-btn.copied { border-color: rgba(34,197,94,0.5); color: #4ade80; }
+
+    .ca-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .ca-icon { flex-shrink: 0; }
+
+    /* Contrato más pequeño en móvil */
+    @media (max-width: 640px) {
+      .ca-btn {
+        padding: 8px 16px;
+        max-width: 92vw;
+      }
+      .ca-text {
+        font-size: 11px;
+      }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 10;
+      background: #050505;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 80px 24px 40px;
+    }
+
+    .footer-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 32px;
+    }
+    @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+
+    .footer-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+      margin-bottom: 24px;
+    }
+
+    .footer-brand-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: conic-gradient(from 130deg, #C9A84C, #F0CE7A, #9A7030, #F0CE7A, #C9A84C);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 9px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .footer-desc { color: #9ca3af; font-size: 14px; line-height: 1.7; max-width: 320px; margin-bottom: 32px; }
+
+    .footer-socials { display: flex; gap: 12px; }
+
+    .footer-social {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .footer-social:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    .footer-col h5 {
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+
+    .footer-col a { color: #9ca3af; font-size: 14px; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold-light); }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+
+    .footer-copy { font-size: 12px; color: #6b7280; }
+
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a { font-size: 12px; color: #6b7280; transition: color 0.2s; }
+    .footer-legal a:hover { color: #fff; }
+
+    .footer-disclaimer {
+      font-size: 10px;
+      color: #4b5563;
+      max-width: 896px;
+      margin: 24px auto 0;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    @keyframes coinSpin {
+      0% { transform: rotateY(0deg) scale(1); box-shadow: 0 0 40px rgba(245,158,11,0.2), inset 0 0 20px rgba(255,255,255,0.1); }
+      50% { transform: rotateY(180deg) scale(1.02); box-shadow: 0 0 60px rgba(245,158,11,0.4), inset 0 0 30px rgba(255,255,255,0.2); }
+      100% { transform: rotateY(360deg) scale(1); box-shadow: 0 0 40px rgba(245,158,11,0.2), inset 0 0 20px rgba(255,255,255,0.1); }
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.05; transform: translate(-50%, -50%) scale(1.08); }
+    }
+
+    /* Scroll-reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
+  </style>
+</head>
+<body>
+
+<!-- ─── BACKGROUND ─── -->
+<div id="bg-layer">
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon" style="background:none;padding:0;overflow:hidden;">
+      <img src="AQUI_TU_CODIGO_BASE64" alt="1PERCENT" style="width:36px;height:36px;border-radius:50%;object-fit:cover;box-shadow:0 0 15px rgba(245,158,11,0.5);" />
+    </div>
+    1PERCENT
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#token">Token</a></li>
+    <li><a href="#comercios">Comercios</a></li>
+    <li><a href="#tokenomics">Tokenomics</a></li>
+    <li><a href="#solana">Solana</a></li>
+  </ul>
+
+  <button class="nav-btn" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Buy Now</button>
+
+  <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="mobile-menu">
+  <a href="#token" onclick="closeMenu()">Token</a>
+  <a href="#comercios" onclick="closeMenu()">Comercios</a>
+  <a href="#tokenomics" onclick="closeMenu()">Tokenomics</a>
+  <a href="#solana" onclick="closeMenu()">Solana</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section>
+  <div id="hero">
+    <div>
+      <div class="hero-badge">
+        <span class="badge-live">Live</span>
+        <span class="badge-line"></span>
+        <span class="badge-net">En Solana Network</span>
+      </div>
+
+      <h1 class="hero-title">
+        One <br />
+        <span class="outline">Percent.</span><br />
+        Real World.
+      </h1>
+
+      <p class="hero-desc">
+        El primer token crypto integrado como moneda de pago en comercios físicos reales. Úsalo hoy, en el mundo real.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#cta" class="btn-primary">
+          Comprar 1PERCENT
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <a href="#token" class="btn-secondary">Descubrir más</a>
+      </div>
+
+      <div class="hero-solana">
+        <span>Disponible en</span>
+        <div class="sol-badge">
+          <div class="sol-dot"></div>
+          Solana Network
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-image-wrap">
+      <div class="hero-img-inner">
+        <div class="hero-img-overlay"></div>
+        <img src="AQUI_TU_CODIGO_BASE64" alt="1PERCENT" />
+        <div class="hero-status">
+          <div class="status-dot"></div>
+          <span class="status-text">System Online</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS ─── -->
+<div id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num" data-counter="1200" data-suffix="+">0+</div>
+      <div class="stat-label">Comercios Activos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-counter="48" data-suffix="k+">0k+</div>
+      <div class="stat-label">Transacciones</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-counter="99" data-suffix="%">0%</div>
+      <div class="stat-label">Uptime Red</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-counter="400" data-prefix="<" data-suffix="ms">&lt;0ms</div>
+      <div class="stat-label">Confirmación TX</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<section id="token">
+  <div id="about">
+    <div class="about-grid">
+      <div class="coin-wrap reveal">
+        <div class="coin-ring" style="width:220px;height:220px;animation-delay:0s"></div>
+        <div class="coin-ring" style="width:280px;height:280px;animation-delay:0.8s"></div>
+        <div class="coin-ring" style="width:340px;height:340px;animation-delay:1.6s"></div>
+        <div class="coin-3d">
+          <img src="AQUI_TU_CODIGO_BASE64" alt="1PERCENT" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+        </div>
+      </div>
+
+      <div class="about-content">
+        <span class="section-eyebrow reveal">¿Qué es 1PERCENT?</span>
+        <h2 class="section-title reveal reveal-delay-1">La crypto que<br><em>ya funciona</em><br>en el mundo real.</h2>
+        <div class="divider reveal reveal-delay-2"></div>
+        <p class="section-desc reveal reveal-delay-2" style="margin-bottom:40px">
+          1PERCENT no es una promesa. Es un ecosistema de pagos ya integrado en comercios físicos, donde puedes usar tu token para comprar, consumir y vivir sin intermediarios tradicionales.
+        </p>
+
+        <div class="feature-list">
+          <div class="feature-item reveal reveal-delay-3">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Pagos en Comercios Físicos</div>
+              <p class="feature-desc">Integración directa con TPVs y sistemas de punto de venta. Sin fricción, sin intermediarios, sin esperas.</p>
+            </div>
+          </div>
+          <div class="feature-item reveal reveal-delay-4">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Liquidación Instantánea</div>
+              <p class="feature-desc">Gracias a la red Solana, cada transacción se confirma en menos de 400ms con fees mínimas.</p>
+            </div>
+          </div>
+          <div class="feature-item reveal reveal-delay-5">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Seguridad On-Chain</div>
+              <p class="feature-desc">Cada pago queda registrado de forma inmutable. Transparencia total para comercios y usuarios.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COMMUNITY ─── -->
+<section id="community">
+  <div class="community-grid">
+    <div style="order:2" class="reveal">
+      <div class="community-badge">
+        <div class="community-badge-dot"></div>
+        <span>#1PERCENT ONE</span>
+      </div>
+      <h2 class="community-title">
+        Nuevo Resurgir<br>
+        <span class="text-gradient-gold">Para la Comunidad</span>
+      </h2>
+      <div class="community-divider"></div>
+
+      <div class="journey-grid">
+        <div class="journey-item">
+          <div class="journey-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5" style="width:20px;height:20px"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
+          </div>
+          <div class="journey-label">Antes</div>
+          <div class="journey-desc">Dudas, Espera, Incertidumbre</div>
+        </div>
+        <div class="journey-item">
+          <div class="journey-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" style="width:20px;height:20px"><path d="M9.937 15.5A2 2 0 008.5 14.063l-6.135-1.582a.5.5 0 010-.962L8.5 9.936A2 2 0 009.937 8.5l1.582-6.135a.5.5 0 01.963 0L14.063 8.5A2 2 0 0015.5 9.937l6.135 1.581a.5.5 0 010 .964L15.5 14.063a2 2 0 00-1.437 1.437l-1.582 6.135a.5.5 0 01-.963 0z"/></svg>
+          </div>
+          <div class="journey-label">Ahora</div>
+          <div class="journey-desc">Acción, Confianza, Unión</div>
+        </div>
+        <div class="journey-item">
+          <div class="journey-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.5" style="width:20px;height:20px"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+          </div>
+          <div class="journey-label">Después</div>
+          <div class="journey-desc">Crecimiento, Recompensas, Gloria</div>
+        </div>
+      </div>
+
+      <div class="community-cta">Un antes y un después para + de 400 holders</div>
+      <p class="community-motto">Vamos con pasos firmes y sin miedo hacia la cima. Juntos somos imparables.</p>
+    </div>
+
+    <div style="order:1" class="reveal">
+      <div class="community-img">
+        <img src="https://res.cloudinary.com/dgfrkwkf2/image/upload/v1777885088/promo_fooi5z.webp" alt="Community" />
+        <div class="staking-badge">
+          <div class="staking-title">Staking</div>
+          <div class="staking-sub">Coming Soon.<br>Faltan pocos días</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section id="how">
+  <div class="how-header">
+    <span class="section-eyebrow reveal">Cómo funciona</span>
+    <h2 class="section-title reveal reveal-delay-1">Tres pasos.<br><em>Un mundo nuevo.</em></h2>
+    <p class="section-desc reveal reveal-delay-2">Desde comprar tu token hasta pagar en un comercio físico, el proceso es completamente fluido.</p>
+  </div>
+
+  <div class="steps-grid">
+    <div class="glass-card reveal reveal-delay-1">
+      <div class="step-num">01</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      </div>
+      <div class="step-title">Adquiere tu 1PERCENT</div>
+      <p class="step-desc">Compra el token en cualquier DEX de la red Solana. Simple, rápido y descentralizado. Sin barreras de entrada.</p>
+    </div>
+    <div class="glass-card reveal reveal-delay-2">
+      <div class="step-num">02</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      </div>
+      <div class="step-title">Conecta tu Wallet</div>
+      <p class="step-desc">Usa tu wallet Solana preferida (Phantom, Solflare…) para vincularla con los terminales de los comercios adheridos.</p>
+    </div>
+    <div class="glass-card reveal reveal-delay-3">
+      <div class="step-num">03</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <div class="step-title">Paga en el mundo real</div>
+      <p class="step-desc">Escanea el QR del comercio, confirma el importe y listo. Tu transacción se confirma en milisegundos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MERCHANTS ─── -->
+<section id="comercios" class="z10" style="padding:80px 24px;">
+  <div class="merchants-header">
+    <span class="section-eyebrow reveal">Ecosistema</span>
+    <h2 class="section-title reveal reveal-delay-1">Comercios que<br>ya <em>aceptan</em> 1PERCENT.</h2>
+    <p class="section-desc reveal reveal-delay-2" style="margin:0 auto">Nuestra red de comercios físicos adheridos crece cada semana. Restaurantes, tiendas, servicios y más.</p>
+  </div>
+
+  <div class="merchants-grid">
+    <div class="glass-card merchant-card reveal reveal-delay-1">
+      <div class="merchant-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width:32px;height:32px"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+      </div>
+      <div class="merchant-title">Restaurantes & Cafeterías</div>
+      <p class="merchant-desc">Paga tu menú del día, tu café de la mañana o tu cena especial directamente con 1PERCENT desde tu móvil.</p>
+      <span class="merchant-badge">✓ Live</span>
+    </div>
+    <div class="glass-card merchant-card reveal reveal-delay-2">
+      <div class="merchant-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width:32px;height:32px"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      </div>
+      <div class="merchant-title">Tiendas de Retail</div>
+      <p class="merchant-desc">Moda, tecnología, papelería. Una red creciente de tiendas físicas integradas en el ecosistema de pagos.</p>
+      <span class="merchant-badge">Expandiendo</span>
+    </div>
+    <div class="glass-card merchant-card reveal reveal-delay-3">
+      <div class="merchant-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width:32px;height:32px"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+      </div>
+      <div class="merchant-title">Servicios & Salud</div>
+      <p class="merchant-desc">Peluquerías, gimnasios, clínicas y centros de bienestar. El token que cubre todas tus necesidades cotidianas.</p>
+      <span class="merchant-badge">✓ Live</span>
+    </div>
+    <div class="glass-card merchant-card reveal reveal-delay-1">
+      <div class="merchant-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width:32px;height:32px"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="merchant-title">Hostelería & Turismo</div>
+      <p class="merchant-desc">Hoteles boutique y alojamientos turísticos que aceptan cripto como ciudadanos de primera clase.</p>
+      <span class="merchant-badge">Próximamente</span>
+    </div>
+    <div class="glass-card merchant-card reveal reveal-delay-2">
+      <div class="merchant-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width:32px;height:32px"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div class="merchant-title">Automoción & Movilidad</div>
+      <p class="merchant-desc">Talleres mecánicos, lavado de vehículos y servicios de movilidad integrados en la red 1PERCENT.</p>
+      <span class="merchant-badge">Expandiendo</span>
+    </div>
+    <div class="glass-card merchant-card reveal reveal-delay-3">
+      <div class="merchant-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width:32px;height:32px"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
+      <div class="merchant-title">Educación & Formación</div>
+      <p class="merchant-desc">Academias, escuelas de idiomas y centros formativos que apuestan por el futuro de los pagos digitales.</p>
+      <span class="merchant-badge">Próximamente</span>
+    </div>
+  </div>
+
+  <p class="merchants-cta">¿Tienes un comercio? <a href="#cta">Únete a nuestra red →</a></p>
+</section>
+
+<!-- ─── TOKENOMICS ─── -->
+<section id="tokenomics">
+  <div class="tokenomics-grid">
+    <div>
+      <span class="section-eyebrow reveal" style="text-align:center">Distribución</span>
+      <h2 class="section-title reveal reveal-delay-1">Tokenomics<br><em>transparentes.</em></h2>
+      <div class="divider reveal reveal-delay-2"></div>
+      <p class="section-desc reveal reveal-delay-2" style="margin-bottom:40px">
+        Supply total fijo, sin inflación. Diseñado para soportar un ecosistema de pagos real y sostenible a largo plazo.
+      </p>
+
+      <div class="token-list">
+        <div class="token-row reveal reveal-delay-3">
+          <div class="token-row-left">
+            <div class="token-dot" style="background:#C9A84C"></div>
+            <span class="token-name">Circulación Pública</span>
+          </div>
+          <span class="token-pct">50%</span>
+        </div>
+        <div class="token-row reveal reveal-delay-4">
+          <div class="token-row-left">
+            <div class="token-dot" style="background:#8a6020"></div>
+            <span class="token-name">Ecosistema & Merchants</span>
+          </div>
+          <span class="token-pct">25%</span>
+        </div>
+        <div class="token-row reveal reveal-delay-5">
+          <div class="token-row-left">
+            <div class="token-dot" style="background:#F0CE7A"></div>
+            <span class="token-name">Liquidez DEX</span>
+          </div>
+          <span class="token-pct">15%</span>
+        </div>
+        <div class="token-row reveal reveal-delay-6">
+          <div class="token-row-left">
+            <div class="token-dot" style="background:#3a2a08"></div>
+            <span class="token-name">Equipo (vesting 3 años)</span>
+          </div>
+          <span class="token-pct">10%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="donut-wrap reveal">
+      <div class="donut-container">
+        <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" id="donut-svg">
+          <circle cx="140" cy="140" r="100" fill="none" stroke="#1a1a1a" stroke-width="40"/>
+          <!-- 50% = 314.16, offset 0 -->
+          <circle class="donut-seg" cx="140" cy="140" r="100" fill="none" stroke="#C9A84C" stroke-width="40"
+            stroke-dasharray="314.16 628.32" stroke-dashoffset="0" id="seg1"/>
+          <!-- 25% = 157.08, offset -314.16 -->
+          <circle class="donut-seg" cx="140" cy="140" r="100" fill="none" stroke="#8a6020" stroke-width="40"
+            stroke-dasharray="157.08 628.32" stroke-dashoffset="-314.16" id="seg2"/>
+          <!-- 15% = 94.25, offset -471.24 -->
+          <circle class="donut-seg" cx="140" cy="140" r="100" fill="none" stroke="#F0CE7A" stroke-width="40"
+            stroke-dasharray="94.25 628.32" stroke-dashoffset="-471.24" id="seg3"/>
+          <!-- 10% = 62.83, offset -565.49 -->
+          <circle class="donut-seg" cx="140" cy="140" r="100" fill="none" stroke="#3a2a08" stroke-width="40"
+            stroke-dasharray="62.83 628.32" stroke-dashoffset="-565.49" id="seg4"/>
+        </svg>
+        <div class="donut-center">
+          <span class="donut-value">1B</span>
+          <span class="donut-label">Supply Total</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SOLANA ─── -->
+<section id="solana" class="z10" style="padding:80px 24px;text-align:center">
+  <span class="section-eyebrow reveal">Infraestructura</span>
+  <h2 class="section-title reveal reveal-delay-1" style="margin:0 auto 24px">Construido sobre<br><em>Solana.</em></h2>
+
+  <div class="divider reveal" style="margin:0 auto 40px"></div>
+
+  <div class="reveal" style="margin-bottom:80px;display:flex;justify-content:center">
+    <div class="solana-badge">
+      <svg width="32" height="32" viewBox="0 0 397.7 311.7" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg1" x1="0" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#9945FF"/>
+            <stop offset="100%" stop-color="#14F195"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#sg1)" d="M64.6 237.9a7.1 7.1 0 015-2.1h317.4a3.6 3.6 0 012.5 6.1l-51.2 51.2a7.1 7.1 0 01-5 2.1H15.9a3.6 3.6 0 01-2.5-6.1l51.2-51.2zm0-164.4a7.1 7.1 0 015-2.1h317.4a3.6 3.6 0 012.5 6.1L338.3 128.7a7.1 7.1 0 01-5 2.1H15.9a3.6 3.6 0 01-2.5-6.1l51.2-51.2zM338.3 128.7a7.1 7.1 0 01-5-2.1L13.4 18.3a3.6 3.6 0 012.5-6.1h317.4a7.1 7.1 0 015 2.1l51.2 51.2a3.6 3.6 0 01-2.5 6.1H69.6"/>
+      </svg>
+      <span class="solana-badge-text">Powered by Solana Network</span>
+    </div>
+  </div>
+
+  <div class="solana-grid" style="max-width:1280px;margin:0 auto">
+    <div class="glass-card solana-card reveal reveal-delay-1">
+      <div class="solana-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <h4 style="color:#fff;font-weight:500;font-size:1.1rem;margin-bottom:12px">65,000 TPS</h4>
+      <p style="color:#9ca3af;font-size:14px;line-height:1.6">La red más rápida para pagos en tiempo real. Ninguna blockchain procesa más transacciones por segundo.</p>
+    </div>
+    <div class="glass-card solana-card reveal reveal-delay-2">
+      <div class="solana-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      </div>
+      <h4 style="color:#fff;font-weight:500;font-size:1.1rem;margin-bottom:12px">$0.001 por TX</h4>
+      <p style="color:#9ca3af;font-size:14px;line-height:1.6">Fees prácticamente insignificantes. Pagar un café no puede costar más de lo que cuesta el café.</p>
+    </div>
+    <div class="glass-card solana-card reveal reveal-delay-3">
+      <div class="solana-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M11 20A7 7 0 014 13c0-3.87 3.13-7 7-7h1"/><path d="M22 12l-3-3-3 3"/><path d="M19 9v4a7 7 0 01-7 7"/></svg>
+      </div>
+      <h4 style="color:#fff;font-weight:500;font-size:1.1rem;margin-bottom:12px">Eco-Friendly</h4>
+      <p style="color:#9ca3af;font-size:14px;line-height:1.6">Proof of Stake. Solana consume un 99.9% menos de energía que redes Proof of Work como Bitcoin.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section id="cta">
+  <div style="max-width:896px;margin:0 auto">
+    <span class="section-eyebrow reveal">Empieza hoy</span>
+    <h2 class="cta-title reveal reveal-delay-1">El futuro de los pagos<br><em style="color:var(--gold-light)">ya está aquí.</em></h2>
+    <div class="divider reveal" style="margin:0 auto 32px"></div>
+    <p class="cta-desc reveal reveal-delay-2">Únete a miles de usuarios que ya pagan en comercios físicos con 1PERCENT. La revolución crypto que no necesita esperar.</p>
+
+   <div class="cta-buttons reveal reveal-delay-3">
+    <a href="https://www.xtrends.fun/swap-token/1percent" class="cta-btn-primary" target="_blank" rel="noopener noreferrer"> Comprar en DEX
+    </a>
+    <a href="https://www.xtrends.fun/trend-info/1percent" class="cta-btn-secondary"> Plataforma
+    </a>
+</div>
+
+    <div class="ca-wrap reveal reveal-delay-4">
+      <span class="ca-label">Contrato Inteligente (Solana)</span>
+      <button class="ca-btn" id="ca-btn" onclick="copyCA()">
+        <span class="ca-text" id="ca-text">8517DWk6Abewx72kPj9M39FcgMqSuQBBN6xmiunxfun</span>
+        <span class="ca-icon" id="ca-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <div class="footer-brand-icon" style="background:none;padding:0;overflow:hidden;">
+          <img src="AQUI_TU_CODIGO_BASE64" alt="1PERCENT" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" />
+        </div>
+        1PERCENT
+      </div>
+      <p class="footer-desc">El primer token crypto con utilidad real en comercios físicos. Construido sobre Solana para el mundo de verdad.</p>
+      <div class="footer-socials">
+        <a href="https://x.com/GABRIEL93298627" class="footer-social">𝕏</a>
+        <a href="https://t.me/PERCENTJGAS" class="footer-social" aria-label="Telegram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 3.5L2.5 10.5L9.5 13.5L12.5 20.5L21.5 3.5Z" />
+            <path d="M9.5 13.5L14.5 8.5" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h5>Token</h5>
+      <ul>
+        <li><a href="#token">¿Qué es 1PERCENT?</a></li>
+        <li><a href="#tokenomics">Tokenomics</a></li>
+        <li><a href="#how">Cómo funciona</a></li>
+        <li><a href="whitepaper.html">Whitepaper</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h5>Ecosistema</h5>
+      <ul>
+        <li><a href="#comercios">Comercios</a></li>
+        <li><a href="#">Únete como comercio</a></li>
+       
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h5>Comunidad</h5>
+      <ul>
+        <li><a href="#">Telegram</a></li>
+        <li><a href="#">Discord</a></li>
+        <li><a href="#">Twitter / X</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom" style="max-width:1280px;margin:0 auto">
+    <p class="footer-copy">© 2026 1PERCENT Token. Todos los derechos reservados. Construido en Solana.</p>
+    <div class="footer-legal">
+      <a href="legal.html#aviso-legal">Aviso Legal</a>
+      <a href="legal.html#privacidad">Privacidad</a>
+      <a href="legal.html#disclaimer">Disclaimer</a>
+    </div>
+  </div>
+
+  <p class="footer-disclaimer">
+    ⚠️ La inversión en criptomonedas conlleva riesgos significativos. Este contenido es únicamente informativo y no constituye asesoramiento financiero. Haz tu propia investigación antes de invertir (DYOR). El valor de los tokens puede ser altamente volátil.
+  </p>
+</footer>
+
+<!-- ─── SCRIPTS ─── -->
+<script>
+  // ── Particles canvas ──
+  (function() {
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles;
+
+    function init() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      const n = w < 768 ? 35 : 70;
+      particles = Array.from({ length: n }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.5 + 0.5,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        a: Math.random() * 0.5 + 0.1
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'screen';
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 160) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(59,130,246,${0.12 * (1 - d / 160)})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+        ctx.beginPath();
+        ctx.arc(particles[i].x, particles[i].y, particles[i].r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(59,130,246,${particles[i].a})`;
+        ctx.fill();
+        particles[i].x += particles[i].vx;
+        particles[i].y += particles[i].vy;
+        if (particles[i].x < 0 || particles[i].x > w) particles[i].vx *= -1;
+        if (particles[i].y < 0 || particles[i].y > h) particles[i].vy *= -1;
+      }
+      requestAnimationFrame(draw);
+    }
+
+    init();
+    draw();
+    window.addEventListener('resize', init);
+  })();
+
+  // ── Navbar scroll ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── Mobile menu ──
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+  }
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Animated counters ──
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.animated) {
+        e.target.dataset.animated = 'true';
+        const target = parseInt(e.target.dataset.counter);
+        const suffix = e.target.dataset.suffix || '';
+        const prefix = e.target.dataset.prefix || '';
+        const duration = 2400;
+        const start = performance.now();
+
+        function update(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(eased * target);
+          e.target.textContent = prefix + current + suffix;
+          if (progress < 1) requestAnimationFrame(update);
+          else e.target.textContent = prefix + target + suffix;
+        }
+        requestAnimationFrame(update);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-counter]').forEach(el => counterObserver.observe(el));
+
+  // ── Donut chart animation ──
+  const donutObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.animated) {
+        e.target.dataset.animated = 'true';
+        const segs = e.target.querySelectorAll('.donut-seg');
+        const targets = [
+          { da: '314.16 628.32', offset: '0' },
+          { da: '157.08 628.32', offset: '-314.16' },
+          { da: '94.25 628.32', offset: '-471.24' },
+          { da: '62.83 628.32', offset: '-565.49' }
+        ];
+        segs.forEach((seg, i) => {
+          seg.style.strokeDasharray = '0 628.32';
+          seg.style.strokeDashoffset = '628.32';
+          setTimeout(() => {
+            seg.style.transition = 'stroke-dasharray 1.5s ease-out, stroke-dashoffset 1.5s ease-out';
+            seg.style.strokeDasharray = targets[i].da;
+            seg.style.strokeDashoffset = targets[i].offset;
+          }, 100 + i * 50);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const donutSvg = document.getElementById('donut-svg');
+  if (donutSvg) donutObserver.observe(donutSvg.closest('.donut-container'));
+
+  // ── Copy CA ──
+  function copyCA() {
+    const ca = '1PCTxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+    navigator.clipboard.writeText(ca).catch(() => {});
+    const btn = document.getElementById('ca-btn');
+    const icon = document.getElementById('ca-icon');
+    btn.classList.add('copied');
+    icon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      icon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+    }, 2000);
+  }
+</script>
+
+</body>
+</html>
