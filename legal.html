@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>1PERCENT — Aviso Legal · Privacidad · Disclaimer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* ─── CSS VARIABLES ─── */
+        :root {
+            --gold: #f59e0b;
+            --gold-light: #fde68a;
+            --gold-dim: #92400e;
+            --bg-base: #050505;
+            --bg-card: #0a0a0a;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Outfit', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-base);
+            color: #e5e7eb;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        ::selection {
+            background: rgba(146, 64, 14, 0.4);
+            color: var(--gold-light);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        section,
+        footer,
+        nav {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        /* ─── BACKGROUND ─── */
+        #bg-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: var(--bg-base);
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(circle at 2px 2px, var(--gold) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        #particles-canvas {
+            position: absolute;
+            inset: 0;
+            opacity: 0.4;
+            mix-blend-mode: screen;
+        }
+
+        /* ─── LAYOUT ─── */
+        .relative {
+            position: relative;
+        }
+        .z10 {
+            position: relative;
+            z-index: 10;
+        }
+        .max-w {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* ─── NAVBAR ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 64px;
+            transition: all 0.3s;
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+        }
+        @media (min-width: 768px) {
+            nav {
+                padding: 0 48px;
+                height: 80px;
+            }
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gold-light);
+            letter-spacing: 0.05em;
+        }
+
+        .nav-logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: conic-gradient(from 130deg, #f59e0b, #fde68a, #92400e, #fde68a, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-body);
+            font-size: 10px;
+            font-weight: 700;
+            color: #000;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+        }
+
+        .nav-links {
+            display: none;
+            list-style: none;
+            gap: 32px;
+        }
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+        .nav-links a {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #9ca3af;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-btn {
+            display: none;
+            padding: 10px 24px;
+            border: 1px solid var(--gold);
+            color: var(--gold-light);
+            font-size: 12px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            transition: all 0.3s;
+            font-family: var(--font-body);
+        }
+        @media (min-width: 768px) {
+            .nav-btn {
+                display: block;
+            }
+        }
+        .nav-btn:hover {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+        @media (min-width: 768px) {
+            .hamburger {
+                display: none;
+            }
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--gold);
+            transition: all 0.3s;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #111;
+            padding: 24px;
+            flex-direction: column;
+            gap: 0;
+        }
+        #mobile-menu.open {
+            display: flex;
+        }
+
+        #mobile-menu a {
+            padding: 16px 0;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #9ca3af;
+            text-align: center;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        #mobile-menu a:hover {
+            color: #fff;
+        }
+
+        /* ─── PAGE CONTENT ─── */
+        .page-content {
+            position: relative;
+            z-index: 10;
+            padding: 120px 24px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .page-content {
+                padding: 160px 48px 100px;
+            }
+        }
+
+        .page-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 56px);
+            font-weight: 300;
+            line-height: 1;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .page-title em {
+            color: var(--gold-light);
+            font-style: italic;
+        }
+
+        .divider {
+            width: 64px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin-bottom: 32px;
+        }
+
+        .last-updated {
+            font-size: 11px;
+            color: #6b7280;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            font-family: monospace;
+        }
+
+        /* ─── TABS ─── */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            padding: 14px 24px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #6b7280;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: var(--font-body);
+            white-space: nowrap;
+        }
+        .tab-btn:hover {
+            color: #e5e7eb;
+        }
+        .tab-btn.active {
+            color: var(--gold-light);
+            border-bottom-color: var(--gold);
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* ─── LEGAL CONTENT STYLES ─── */
+        .legal-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .legal-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gold-light);
+            margin-top: 28px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .legal-content p {
+            color: #9ca3af;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            font-weight: 300;
+        }
+
+        .legal-content ul,
+        .legal-content ol {
+            color: #9ca3af;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            padding-left: 24px;
+            font-weight: 300;
+        }
+
+        .legal-content li {
+            margin-bottom: 8px;
+        }
+
+        .legal-content strong {
+            color: #e5e7eb;
+            font-weight: 600;
+        }
+
+        .legal-content a {
+            color: var(--gold-light);
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        .legal-content a:hover {
+            color: var(--gold);
+        }
+
+        .legal-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        @media (min-width: 640px) {
+            .legal-card {
+                padding: 40px;
+            }
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            position: relative;
+            z-index: 10;
+            background: #050505;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 80px 24px 40px;
+        }
+
+        .footer-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 48px;
+            padding-bottom: 64px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 32px;
+        }
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 2fr 1fr 1fr 1fr;
+            }
+        }
+
+        .footer-brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gold-light);
+            letter-spacing: 0.05em;
+            margin-bottom: 24px;
+        }
+
+        .footer-brand-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: conic-gradient(from 130deg, #c9a84c, #f0ce7a, #9a7030, #f0ce7a, #c9a84c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-body);
+            font-size: 9px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .footer-desc {
+            color: #9ca3af;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 320px;
+            margin-bottom: 32px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .footer-social:hover {
+            border-color: var(--gold);
+            color: var(--gold-light);
+        }
+
+        .footer-col h5 {
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-col a {
+            color: #9ca3af;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover {
+            color: var(--gold-light);
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .footer-legal a {
+            font-size: 12px;
+            color: #6b7280;
+            transition: color 0.2s;
+        }
+        .footer-legal a:hover {
+            color: #fff;
+        }
+
+        .footer-disclaimer {
+            font-size: 10px;
+            color: #4b5563;
+            max-width: 896px;
+            margin: 24px auto 0;
+            text-align: center;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── BACKGROUND ─── -->
+    <div id="bg-layer">
+        <div class="bg-grid"></div>
+        <canvas id="particles-canvas"></canvas>
+    </div>
+
+    <!-- ─── NAVBAR ─── -->
+    <nav id="navbar">
+        <a href="index2.html" class="nav-logo">
+            <div class="nav-logo-icon">1%</div>
+            1PERCENT
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="index2.html#token">Token</a></li>
+            <li><a href="index2.html#comercios">Comercios</a></li>
+            <li><a href="index2.html#tokenomics">Tokenomics</a></li>
+            <li><a href="index2.html#solana">Solana</a></li>
+        </ul>
+
+        <button class="nav-btn" onclick="window.location.href='index2.html#cta'">Buy Now</button>
+
+        <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div id="mobile-menu">
+        <a href="index2.html#token" onclick="closeMenu()">Token</a>
+        <a href="index2.html#comercios" onclick="closeMenu()">Comercios</a>
+        <a href="index2.html#tokenomics" onclick="closeMenu()">Tokenomics</a>
+        <a href="index2.html#solana" onclick="closeMenu()">Solana</a>
+    </div>
+
+    <!-- ─── PAGE CONTENT ─── -->
+    <div class="page-content z10">
+        <h1 class="page-title">Documentos<em> Legales</em></h1>
+        <div class="divider"></div>
+        <p class="last-updated">Última actualización: Mayo 2026</p>
+
+        <!-- ─── TABS ─── -->
+        <div class="tabs" role="tablist">
+            <button class="tab-btn active" role="tab" data-tab="aviso-legal" onclick="switchTab('aviso-legal')">Aviso Legal</button>
+            <button class="tab-btn" role="tab" data-tab="privacidad" onclick="switchTab('privacidad')">Privacidad</button>
+            <button class="tab-btn" role="tab" data-tab="disclaimer" onclick="switchTab('disclaimer')">Disclaimer</button>
+        </div>
+
+        <!-- ─── AVISO LEGAL ─── -->
+        <div class="tab-panel active legal-content legal-card" id="panel-aviso-legal" role="tabpanel">
+            <h2>Aviso Legal</h2>
+            <p><strong>1PERCENT</strong> es un token digital construido sobre la red Solana. El presente Aviso Legal regula el acceso y uso del sitio web <strong>1percent.io</strong> (en adelante, "el Sitio"), así como de todos los servicios, contenidos y herramientas asociadas al ecosistema 1PERCENT.</p>
+
+            <h3>1. Identificación del titular</h3>
+            <p>El Sitio es operado por el equipo de desarrollo de 1PERCENT, un proyecto descentralizado de código abierto. Para cualquier consulta legal, puede contactarse a través de los canales oficiales de la comunidad (Telegram, Discord) o mediante correo electrónico a <a href="mailto:legal@1percent.io">legal@1percent.io</a>.</p>
+
+            <h3>2. Naturaleza del token</h3>
+            <p>1PERCENT es un token de utilidad diseñado para facilitar pagos en comercios físicos adheridos a la red. <strong>No constituye un valor financiero, acción, bono, instrumento de inversión colectiva ni ningún otro instrumento financiero regulado</strong> bajo la legislación española, europea o de cualquier otra jurisdicción. El token no otorga derechos de propiedad, dividendos, participación en beneficios ni derechos de voto sobre ninguna entidad.</p>
+
+            <h3>3. Exclusiones y limitaciones de responsabilidad</h3>
+            <p>El equipo de 1PERCENT no se hace responsable de:</p>
+            <ul>
+                <li>El uso indebido del token por parte de terceros.</li>
+                <li>Pérdidas derivadas de la volatilidad del precio del token en mercados secundarios.</li>
+                <li>Fallos técnicos, hackeos o vulnerabilidades en wallets de terceros, smart contracts ajenos o plataformas de intercambio.</li>
+                <li>La interpretación que terceros puedan hacer del contenido publicado en el Sitio o en redes sociales oficiales.</li>
+                <li>Cambios regulatorios que puedan afectar la tenencia, uso o comerciabilidad del token en determinadas jurisdicciones.</li>
+            </ul>
+
+            <h3>4. Propiedad intelectual</h3>
+            <p>Todos los elementos del Sitio —incluyendo textos, logotipos, iconos, imágenes, gráficos, código fuente y diseño— son propiedad del equipo de 1PERCENT o se utilizan bajo licencia. Queda prohibida la reproducción total o parcial sin autorización expresa. El nombre "1PERCENT" y su logotipo son marcas distintivas del proyecto.</p>
+
+            <h3>5. Jurisdicción aplicable</h3>
+            <p>El presente Aviso Legal se rige por la legislación española. En caso de controversia, las partes se someterán a los juzgados y tribunales de Madrid, renunciando expresamente a cualquier otro fuero que pudiera corresponderles, sin perjuicio de los derechos irrenunciables que la ley reconozca a los consumidores.</p>
+
+            <h3>6. Modificaciones</h3>
+            <p>El equipo de 1PERCENT se reserva el derecho de modificar este Aviso Legal en cualquier momento. Las modificaciones entrarán en vigor desde el momento de su publicación en el Sitio. Se recomienda revisar periódicamente este documento.</p>
+        </div>
+
+        <!-- ─── PRIVACIDAD ─── -->
+        <div class="tab-panel legal-content legal-card" id="panel-privacidad" role="tabpanel">
+            <h2>Política de Privacidad</h2>
+            <p>En <strong>1PERCENT</strong> respetamos tu privacidad. Esta Política describe cómo recopilamos, tratamos y protegemos los datos personales en relación con el uso del Sitio y los servicios asociados, de conformidad con el <strong>Reglamento General de Protección de Datos (RGPD)</strong> de la Unión Europea y la <strong>Ley Orgánica de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD)</strong> de España.</p>
+
+            <h3>1. Responsable del tratamiento</h3>
+            <p>El responsable del tratamiento de los datos personales es el equipo de desarrollo de 1PERCENT, con dirección de contacto: <a href="mailto:privacy@1percent.io">privacy@1percent.io</a>.</p>
+
+            <h3>2. Datos que recopilamos</h3>
+            <p>Dada la naturaleza descentralizada del proyecto, <strong>no recopilamos datos personales de forma masiva</strong>. Sin embargo, podemos tratar los siguientes datos:</p>
+            <ul>
+                <li><strong>Datos de contacto:</strong> Si te comunicas con nosotros por correo electrónico o a través de formularios en el Sitio, trataremos tu nombre, dirección de correo electrónico y cualquier otra información que decidas proporcionarnos voluntariamente.</li>
+                <li><strong>Datos de navegación:</strong> Utilizamos herramientas de analítica web (como Google Analytics) que pueden recopilar información anónima sobre tu visita: páginas vistas, tiempo de permanencia, tipo de navegador, ubicación geográfica aproximada (a nivel de país/ciudad), etc. Estos datos no te identifican personalmente.</li>
+                <li><strong>Direcciones de wallet:</strong> Cuando interactúas con nuestros smart contracts o sistemas de staking, la dirección pública de tu wallet Solana queda registrada en la blockchain. <strong>Esta información es pública por naturaleza de la tecnología blockchain</strong> y no es almacenada por nosotros en servidores privados.</li>
+            </ul>
+
+            <h3>3. Finalidad del tratamiento</h3>
+            <p>Tratamos los datos personales únicamente para las siguientes finalidades:</p>
+            <ul>
+                <li>Responder a consultas, solicitudes o comunicaciones que nos dirijas.</li>
+                <li>Mejorar la experiencia de usuario en el Sitio mediante análisis agregados y anónimos.</li>
+                <li>Enviar comunicaciones informativas sobre el proyecto, siempre que hayas dado tu consentimiento expreso para ello.</li>
+                <li>Cumplir con obligaciones legales que pudieran resultar aplicables.</li>
+            </ul>
+
+            <h3>4. Base jurídica del tratamiento</h3>
+            <p>El tratamiento de tus datos se basa en:</p>
+            <ul>
+                <li>Tu <strong>consentimiento explícito</strong> (art. 6.1.a RGPD) cuando nos contactas o te suscribes a comunicaciones.</li>
+                <li>El <strong>interés legítimo</strong> (art. 6.1.f RGPD) para mejorar la seguridad y funcionamiento del Sitio.</li>
+                <li>El <strong>cumplimiento de obligaciones legales</strong> (art. 6.1.c RGPD) cuando así lo exija la normativa aplicable.</li>
+            </ul>
+
+            <h3>5. Conservación de datos</h3>
+            <p>Conservamos los datos personales únicamente durante el tiempo necesario para cumplir con la finalidad para la que fueron recabados. Los datos de contacto se conservarán mientras exista una relación de comunicación activa contigo. Los datos de analítica se conservan de forma agregada y anónima.</p>
+
+            <h3>6. Cookies</h3>
+            <p>El Sitio puede utilizar cookies técnicas y de análisis. Puedes configurar tu navegador para rechazar todas las cookies o para que te avise cuando se envíe una. La desactivación de cookies puede afectar a la funcionalidad de algunas partes del Sitio.</p>
+
+            <h3>7. Tus derechos</h3>
+            <p>De acuerdo con el RGPD, tienes derecho a:</p>
+            <ul>
+                <li><strong>Acceder</strong> a tus datos personales.</li>
+                <li><strong>Rectificar</strong> datos inexactos o incompletos.</li>
+                <li><strong>Solicitar la supresión</strong> de tus datos cuando ya no sean necesarios.</li>
+                <li><strong>Limitar</strong> el tratamiento en determinadas circunstancias.</li>
+                <li><strong>Oponerte</strong> al tratamiento basado en interés legítimo.</li>
+                <li><strong>Solicitar la portabilidad</strong> de tus datos a otro responsable.</li>
+                <li><strong>Retirar tu consentimiento</strong> en cualquier momento.</li>
+            </ul>
+            <p>Para ejercer estos derechos, envía un correo a <a href="mailto:privacy@1percent.io">privacy@1percent.io</a>. También tienes derecho a presentar una reclamación ante la <strong>Agencia Española de Protección de Datos (AEPD)</strong>.</p>
+
+            <h3>8. Transferencias internacionales</h3>
+            <p>Algunos de nuestros proveedores de servicios (analítica web, hosting) pueden estar ubicados fuera del Espacio Económico Europeo, en particular en Estados Unidos. En tales casos, nos aseguramos de que existan garantías adecuadas (como cláusulas contractuales tipo de la Comisión Europea) para proteger tus datos conforme a la normativa europea.</p>
+        </div>
+
+        <!-- ─── DISCLAIMER ─── -->
+        <div class="tab-panel legal-content legal-card" id="panel-disclaimer" role="tabpanel">
+            <h2>Disclaimer / Descargo de Responsabilidad</h2>
+            <p>La información contenida en el Sitio <strong>1percent.io</strong> y en todos los canales de comunicación oficiales del proyecto 1PERCENT tiene un carácter <strong>exclusivamente informativo</strong>. Nada de lo aquí publicado debe interpretarse como asesoramiento financiero, legal, fiscal o de inversión.</p>
+
+            <h3>1. Sin asesoramiento financiero</h3>
+            <p>1PERCENT no es un asesor financiero registrado. Cualquier decisión de compra, venta, tenencia o uso del token 1PERCENT es responsabilidad exclusiva del usuario. <strong>Recomendamos encarecidamente consultar con un asesor financiero cualificado</strong> antes de tomar cualquier decisión relacionada con criptomonedas.</p>
+
+            <h3>2. Riesgos inherentes a las criptomonedas</h3>
+            <p>La inversión en criptomonedas, incluidos los tokens de utilidad como 1PERCENT, conlleva <strong>riesgos significativos</strong>, entre los que se incluyen, sin carácter limitativo:</p>
+            <ul>
+                <li><strong>Volatilidad extrema:</strong> El precio del token puede experimentar fluctuaciones abruptas y sustanciales en períodos de tiempo muy cortos. Puedes perder la totalidad de tu inversión.</li>
+                <li><strong>Riesgo regulatorio:</strong> Los marcos legales aplicables a las criptomonedas están en constante evolución. Cambios normativos podrían afectar negativamente al valor, uso o comerciabilidad del token.</li>
+                <li><strong>Riesgo tecnológico:</strong> Vulnerabilidades en smart contracts, fallos en la red Solana, hackeos o errores de código podrían comprometer la seguridad del token o de los fondos asociados.</li>
+                <li><strong>Riesgo de liquidez:</strong> No se garantiza que exista en todo momento un mercado líquido para comprar o vender el token. La liquidez puede ser limitada, especialmente en fases tempranas del proyecto.</li>
+                <li><strong>Riesgo de pérdida de claves:</strong> La custodia de las claves privadas de tu wallet es responsabilidad exclusiva tuya. La pérdida de las claves implica la pérdida irreversible de los tokens.</li>
+            </ul>
+
+            <h3>3. DYOR (Do Your Own Research)</h3>
+            <p>Instamos a todos los usuarios a realizar su propia investigación (<strong>DYOR</strong>) antes de interactuar con el ecosistema 1PERCENT. Lee la documentación técnica, comprende el modelo tokenómico, verifica el código fuente del smart contract y fórmate sobre el funcionamiento de la red Solana y de las finanzas descentralizadas (DeFi).</p>
+
+            <h3>4. Declaraciones prospectivas</h3>
+            <p>El Sitio y las comunicaciones del proyecto pueden contener declaraciones prospectivas sobre desarrollos futuros, planes de expansión, integraciones con comercios o nuevas funcionalidades. Dichas declaraciones se basan en expectativas y proyecciones actuales y están sujetas a riesgos e incertidumbres que pueden hacer que los resultados reales difieran materialmente de los previstos. <strong>No se garantiza el cumplimiento de dichas proyecciones.</strong></p>
+
+            <h3>5. No responsabilidad por pérdidas</h3>
+            <p>En la máxima medida permitida por la ley aplicable, el equipo de 1PERCENT, sus colaboradores y desarrolladores <strong>no asumen responsabilidad alguna</strong> por pérdidas, daños o perjuicios de cualquier naturaleza —directos o indirectos, patrimoniales o no patrimoniales— derivados del uso del Sitio, de la tenencia o comercio del token, o de la confianza depositada en la información aquí publicada.</p>
+
+            <h3>6. Naturaleza especulativa</h3>
+            <p>El token 1PERCENT está diseñado como un medio de pago en comercios físicos adheridos. Cualquier expectativa de revalorización es puramente especulativa. <strong>No inviertas más de lo que estés dispuesto a perder.</strong> El valor del token puede reducirse a cero.</p>
+
+            <h3>7. Aceptación del riesgo</h3>
+            <p>Al acceder al Sitio e interactuar con el ecosistema 1PERCENT, reconoces haber leído, comprendido y aceptado los riesgos aquí descritos, y manifiestas que actúas bajo tu propia responsabilidad y criterio.</p>
+        </div>
+    </div>
+
+    <!-- ─── FOOTER ─── -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand-logo">
+                    <div class="footer-brand-icon">1%</div>
+                    1PERCENT
+                </div>
+                <p class="footer-desc">El primer token crypto con utilidad real en comercios físicos. Construido sobre Solana para el mundo de verdad.</p>
+                <div class="footer-socials">
+                    <a href="#" class="footer-social">𝕏</a>
+                    <a href="#" class="footer-social">✈</a>
+                    <a href="#" class="footer-social">◈</a>
+                    <a href="#" class="footer-social">⌥</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h5>Token</h5>
+                <ul>
+                    <li><a href="index2.html#token">¿Qué es 1PERCENT?</a></li>
+                    <li><a href="index2.html#tokenomics">Tokenomics</a></li>
+                    <li><a href="index2.html#how">Cómo funciona</a></li>
+                    <li><a href="#">Whitepaper</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h5>Ecosistema</h5>
+                <ul>
+                    <li><a href="index2.html#comercios">Comercios</a></li>
+                    <li><a href="#">Únete como comercio</a></li>
+                    <li><a href="#">SDK de pagos</a></li>
+                    <li><a href="#">Documentación API</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h5>Comunidad</h5>
+                <ul>
+                    <li><a href="#">Telegram</a></li>
+                    <li><a href="#">Discord</a></li>
+                    <li><a href="#">Twitter / X</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2025 1PERCENT Token. Todos los derechos reservados. Construido en Solana.</p>
+            <div class="footer-legal">
+                <a href="legal.html#aviso-legal">Aviso Legal</a>
+                <a href="legal.html#privacidad">Privacidad</a>
+                <a href="legal.html#disclaimer">Disclaimer</a>
+            </div>
+        </div>
+
+        <p class="footer-disclaimer">
+            ⚠️ La inversión en criptomonedas conlleva riesgos significativos. Este contenido es únicamente informativo y no constituye asesoramiento financiero. Haz tu propia investigación antes de invertir (DYOR). El valor de los tokens puede ser altamente volátil.
+        </p>
+    </footer>
+
+    <!-- ─── SCRIPTS ─── -->
+    <script>
+        // ── Particles canvas ──
+        (function() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h, particles;
+
+            function init() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+                const n = w < 768 ? 35 : 70;
+                particles = Array.from({ length: n }, () => ({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 1.5 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    a: Math.random() * 0.5 + 0.1
+                }));
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                ctx.globalCompositeOperation = 'screen';
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const d = Math.sqrt(dx * dx + dy * dy);
+                        if (d < 160) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(59,130,246,${0.12 * (1 - d / 160)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                    ctx.beginPath();
+                    ctx.arc(particles[i].x, particles[i].y, particles[i].r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(59,130,246,${particles[i].a})`;
+                    ctx.fill();
+                    particles[i].x += particles[i].vx;
+                    particles[i].y += particles[i].vy;
+                    if (particles[i].x < 0 || particles[i].x > w) particles[i].vx *= -1;
+                    if (particles[i].y < 0 || particles[i].y > h) particles[i].vy *= -1;
+                }
+                requestAnimationFrame(draw);
+            }
+
+            init();
+            draw();
+            window.addEventListener('resize', init);
+        })();
+
+        // ── Mobile menu ──
+        function toggleMenu() {
+            document.getElementById('mobile-menu').classList.toggle('open');
+        }
+
+        function closeMenu() {
+            document.getElementById('mobile-menu').classList.remove('open');
+        }
+
+        // ── Tabs ──
+        function switchTab(tabId) {
+            // Ocultar todos los paneles
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            // Desactivar todos los botones
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Activar el panel y botón correspondiente
+            document.getElementById('panel-' + tabId).classList.add('active');
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            // Actualizar hash en URL
+            window.location.hash = tabId;
+        }
+
+        // ── Al cargar, leer hash de URL para activar la pestaña correcta ──
+        (function() {
+            const hash = window.location.hash.replace('#', '');
+            const validTabs = ['aviso-legal', 'privacidad', 'disclaimer'];
+            if (validTabs.includes(hash)) {
+                switchTab(hash);
+            }
+        })();
+
+        // ── Escuchar cambios de hash (por si el usuario usa los botones del navegador) ──
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.replace('#', '');
+            const validTabs = ['aviso-legal', 'privacidad', 'disclaimer'];
+            if (validTabs.includes(hash)) {
+                switchTab(hash);
+            }
+        });
+    </script>
+
+</body>
+</html>
