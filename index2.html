@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>1PERCENT — La Crypto del Mundo Real</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,6 +34,8 @@
     }
 
     ::selection { background: rgba(146,64,14,0.4); color: var(--gold-light); }
+
+    a { text-decoration: none; color: inherit; }
 
     section, footer, nav, #stats {
       max-width: 100vw;
@@ -194,10 +196,9 @@
       text-transform: uppercase;
       color: #9ca3af;
       text-align: center;
-      border-bottom: 1px solid #111;
+      text-decoration: none;
       transition: color 0.2s;
     }
-    #mobile-menu a:last-child { border-bottom: none; }
     #mobile-menu a:hover { color: #fff; }
 
     /* ─── HERO ─── */
